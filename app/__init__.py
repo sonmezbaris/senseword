@@ -1,0 +1,1 @@
+"""SenseWord application package."""

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Choose your goal — SenseWord{% endblock %}
+
+{% block content %}
+<section class="auth-card onboarding-card">
+    <h1>What's your learning goal?</h1>
+    <p class="muted">Pick one so we can tailor your vocabulary journey. You can focus on what matters most to you.</p>
+
+    {% if error %}
+    <p class="alert alert-error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" action="/onboarding" class="form">
+        <div class="goal-grid">
+            {% for goal in goals %}
+            <label class="goal-option">
+                <input type="radio" name="learning_goal" value="{{ goal }}"
+                       {% if loop.first %}required{% endif %}
+                       {% if user.learning_goal == goal %}checked{% endif %} />
+                <span class="goal-label">{{ goal }}</span>
+            </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+</section>
+{% endblock %}

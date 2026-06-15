@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Learn: {{ word.word }} — SenseWord{% endblock %}
+
+{% block content %}
+<section class="learn-card" data-word="{{ word.word }}" data-lang="en-US">
+    <!-- 1. See the word -->
+    <h1 class="learn-word">{{ word.word }}</h1>
+    {% if word.pronunciation %}
+    <p class="pronunciation">{{ word.pronunciation }}</p>
+    {% endif %}
+
+    <!-- 2. Hear the pronunciation -->
+    <button id="play-pronunciation" class="btn btn-secondary">🔊 Play pronunciation</button>
+
+    <!-- 3. Turkish meaning -->
+    <p class="meaning"><strong>Meaning:</strong> {{ word.meaning }}</p>
+
+    <!-- 4. Image -->
+    {% if word.image_url %}
+    <img class="learn-image" src="{{ word.image_url }}" alt="Image for {{ word.word }}" />
+    {% endif %}
+
+    <!-- 5. Example sentence -->
+    {% if word.example_sentence %}
+    <blockquote class="example" id="example-sentence">{{ word.example_sentence }}</blockquote>
+    <button id="play-example" class="btn btn-small">🔊 Play example</button>
+    {% endif %}
+
+    <hr />
+
+    <!-- 6. Write your own sentence -->
+    <form method="post" action="/learn/{{ word.id }}/sentence" class="form">
+        <label for="user_sentence">Write your own sentence using "{{ word.word }}"</label>
+        <textarea id="user_sentence" name="user_sentence" rows="3"
+                  placeholder="Type a sentence...">{{ word.user_sentence or "" }}</textarea>
+
+        <!-- 7. Read it aloud (speech recognition) -->
+        <div class="speech-controls">
+            <button type="button" id="start-speech" class="btn btn-small">🎤 Read aloud</button>
+            <span id="speech-status" class="muted"></span>
+        </div>
+        <p id="speech-result" class="speech-result"></p>
+
+        <button type="submit" class="btn btn-primary">Save my sentence</button>
+    </form>
+
+    <div class="learn-footer">
+        <a class="btn btn-secondary" href="/review">Done — go to review</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/speech.js') }}"></script>
+<script src="{{ url_for('static', path='js/learning.js') }}"></script>
+{% endblock %}

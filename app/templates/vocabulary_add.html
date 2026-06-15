@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Add Word — SenseWord{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <h1>Add a new word</h1>
+
+    {% if error %}
+    <p class="alert alert-error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" action="/vocabulary/add" class="form">
+        <label for="word-input">English word *</label>
+        <input type="text" id="word-input" name="word" required autofocus />
+
+        <label for="meaning">Turkish meaning *</label>
+        <input type="text" id="meaning" name="meaning" required />
+
+        <label for="pronunciation-input">Pronunciation (auto-filled, editable)</label>
+        <input type="text" id="pronunciation-input" name="pronunciation" placeholder="e.g. /ˈæp.əl/" />
+
+        <label for="example_sentence">Example sentence</label>
+        <textarea id="example_sentence" name="example_sentence" rows="2"></textarea>
+
+        <label for="image_url">Image URL</label>
+        <input type="url" id="image_url" name="image_url" placeholder="https://..." />
+
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" name="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Save word</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/vocabulary_add.js') }}"></script>
+{% endblock %}

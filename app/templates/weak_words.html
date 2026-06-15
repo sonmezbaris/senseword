@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Weak words — SenseWord{% endblock %}
+
+{% block content %}
+<div class="weak-head">
+    <h1>Weak words</h1>
+    {% if rows %}
+    <a class="btn btn-primary" href="/study/weak">🔁 Review all weak words</a>
+    {% endif %}
+</div>
+<p class="muted">Words with low memory strength, frequent mistakes, or still being learned.</p>
+
+{% if rows %}
+<ul class="weak-list">
+    {% for r in rows %}
+    {% set w = r.catalog_word %}
+    <li class="weak-card">
+        <div class="weak-card-main">
+            <div class="weak-word">
+                <strong>{{ w.word }}</strong>
+                <span class="muted">— {{ w.turkish_translation }}</span>
+            </div>
+            <div class="weak-meta">
+                <span class="weak-strength">
+                    <span class="strength-bar">
+                        <span class="strength-bar-fill" style="width: {{ r.memory_strength }}%;"></span>
+                    </span>
+                    {{ r.memory_strength }}/100
+                </span>
+                <span class="muted">seen {{ r.times_seen }}</span>
+                <span class="muted">wrong {{ r.times_wrong }}</span>
+                <span class="muted">
+                    next: {% if r.next_review_at %}{{ r.next_review_at.strftime('%Y-%m-%d') }}{% else %}—{% endif %}
+                </span>
+            </div>
+        </div>
+        <a class="btn btn-small btn-secondary" href="/study/word/{{ w.id }}">Study this word</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<section class="empty-state">
+    <div class="complete-badge">🎯</div>
+    <p class="muted">You do not have weak words yet.</p>
+    <a class="btn btn-primary" href="/study">Start studying</a>
+</section>
+{% endif %}
+{% endblock %}

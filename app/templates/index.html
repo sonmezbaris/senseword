@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}SenseWord — Multisensory Vocabulary Learning{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Learn English vocabulary with all your senses</h1>
+    <p class="lead">
+        See the word, hear it, picture it, read an example, write your own
+        sentence, say it out loud — then let spaced repetition lock it in.
+    </p>
+
+    <div class="hero-actions">
+        <a class="btn btn-primary" href="/register">Get started</a>
+        <a class="btn btn-secondary" href="/login">I already have an account</a>
+    </div>
+</section>
+
+<section class="steps">
+    <h2>How it works</h2>
+    <ol class="steps-list">
+        <li>👀 See the word</li>
+        <li>🔊 Hear the pronunciation</li>
+        <li>🖼️ See a related image</li>
+        <li>📖 Read an example sentence</li>
+        <li>✍️ Write your own sentence</li>
+        <li>🗣️ Read it aloud</li>
+        <li>🔁 Repeat with spaced repetition</li>
+    </ol>
+</section>
+{% endblock %}

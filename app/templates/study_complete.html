@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Path completed — SenseWord{% endblock %}
+
+{% block content %}
+<section class="empty-state study-complete">
+    <div class="complete-badge">🎉</div>
+    <h1>Path completed!</h1>
+    <p class="muted">
+        You finished <strong>{{ path.name }}</strong>. Great work.
+    </p>
+
+    <div class="complete-stats">
+        <div class="complete-stat">
+            <span class="complete-stat-num">{{ studied }}</span>
+            <span class="muted">words studied</span>
+        </div>
+        <div class="complete-stat">
+            <span class="complete-stat-num">{{ total }}</span>
+            <span class="muted">words in path</span>
+        </div>
+        {% if weak_count > 0 %}
+        <div class="complete-stat">
+            <span class="complete-stat-num">{{ weak_count }}</span>
+            <span class="muted">still to practice</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="complete-actions">
+        {% if weak_count > 0 %}
+        <a class="btn btn-primary" href="/study/card/{{ weak_position }}?path={{ path.slug }}">
+            🔁 Review weak words ({{ weak_count }})
+        </a>
+        {% else %}
+        <a class="btn btn-primary" href="/study/card/0?path={{ path.slug }}">
+            🔁 Study path again
+        </a>
+        {% endif %}
+        <a class="btn btn-secondary" href="/dashboard">Back to dashboard</a>
+    </div>
+</section>
+{% endblock %}

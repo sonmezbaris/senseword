@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Review — SenseWord{% endblock %}
+
+{% block content %}
+<h1>Review session</h1>
+<p class="muted">{{ due_count }} word(s) due for review.</p>
+
+{% if word %}
+<section class="review-card" data-word="{{ word.word }}" data-lang="en-US">
+    <h2 class="learn-word">{{ word.word }}</h2>
+
+    <button id="play-pronunciation" class="btn btn-secondary">🔊 Play</button>
+
+    {% if word.image_url %}
+    <img class="learn-image" src="{{ word.image_url }}" alt="Image for {{ word.word }}" />
+    {% endif %}
+
+    <!-- Reveal the meaning only after the user tries to recall it. -->
+    <details class="reveal">
+        <summary>Show meaning</summary>
+        <p class="meaning">{{ word.meaning }}</p>
+        {% if word.example_sentence %}
+        <blockquote class="example">{{ word.example_sentence }}</blockquote>
+        {% endif %}
+    </details>
+
+    <p class="prompt">How well did you remember it?</p>
+    <form method="post" action="/review/{{ word.id }}" class="rating-form">
+        <button type="submit" name="result" value="hard" class="btn btn-danger">Hard</button>
+        <button type="submit" name="result" value="medium" class="btn btn-secondary">Medium</button>
+        <button type="submit" name="result" value="easy" class="btn btn-primary">Easy</button>
+    </form>
+</section>
+{% else %}
+<section class="empty-state">
+    <p>🎉 Nothing due right now. Great job!</p>
+    <a class="btn btn-primary" href="/dashboard">Back to dashboard</a>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/speech.js') }}"></script>
+<script>
+    // Wire the play button to the speech helper for the current review word.
+    document.addEventListener("DOMContentLoaded", function () {
+        const card = document.querySelector(".review-card");
+        const playBtn = document.getElementById("play-pronunciation");
+        if (card && playBtn) {
+            playBtn.addEventListener("click", function () {
+                window.SenseWordSpeech.speak(card.dataset.word, card.dataset.lang);
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Study — SenseWord{% endblock %}
+
+{% block content %}
+{% if not word %}
+<section class="empty-state">
+    {% if weak_done %}
+    <div class="complete-badge">💪</div>
+    <h1>No weak words left!</h1>
+    <p class="muted">You've practiced all your weak words. Great job.</p>
+    <a class="btn btn-primary" href="/study">Study new words</a>
+    <a class="btn btn-secondary" href="/dashboard">Back to dashboard</a>
+    {% elif review_done %}
+    <div class="complete-badge">✅</div>
+    <h1>All caught up!</h1>
+    <p class="muted">No words are due for review right now. Come back later.</p>
+    <a class="btn btn-primary" href="/study">Study new words</a>
+    <a class="btn btn-secondary" href="/dashboard">Back to dashboard</a>
+    {% else %}
+    <h1>No vocabulary loaded yet</h1>
+    <p class="muted">The curated word catalog is empty. Seed it to start studying.</p>
+    <a class="btn btn-primary" href="/dashboard">Back to dashboard</a>
+    {% endif %}
+</section>
+{% else %}
+
+<!-- Context bar: back link + context + progress -->
+<div class="study-topbar">
+    <a class="btn btn-small btn-secondary" href="{{ back_url }}">☰ {{ back_label }}</a>
+    <span class="muted">
+        {% if context_label %}<strong>{{ context_label }}</strong> · {% endif %}
+        Word {{ position + 1 }} of {{ total }} · {{ answered }} answered
+    </span>
+</div>
+
+<!-- Progress indicator: current word / total / percentage -->
+<div class="study-progress">
+    <div class="progress-bar">
+        <div class="progress-bar-fill"
+             style="width: {{ ((position + 1) / total * 100) | round(1) }}%;"></div>
+    </div>
+    <div class="progress-meta muted">
+        Word {{ position + 1 }} / {{ total }}
+        ({{ ((position + 1) / total * 100) | round(0) | int }}%)
+        {% if studied_in_path is defined and studied_in_path is not none %}
+        · {{ studied_in_path }} studied in this path
+        {% endif %}
+    </div>
+</div>
+
+<!--
+  The study card carries all word data as data-* attributes. study.js reads
+  these to drive progressive reveal, audio playback, recording, and saving.
+  Steps after the first start hidden and appear as the user advances.
+-->
+<section class="study-card"
+         id="study-card"
+         data-word-id="{{ word.id }}"
+         data-word="{{ word.word }}"
+         data-lang="en-US"
+         data-audio-url="{{ word.audio_url or '' }}"
+         data-example="{{ word.example_sentence or '' }}">
+
+    <!-- Meta badges -->
+    <div class="study-badges">
+        <span class="badge badge-{{ word.level }}">{{ word.level }}</span>
+        {% if word.word_type %}<span class="badge">{{ word.word_type }}</span>{% endif %}
+        {% for cat in word.exam_category %}
+        <span class="badge badge-exam">{{ cat }}</span>
+        {% endfor %}
+    </div>
+
+    <!-- Step 1: English word (always visible) -->
+    <div class="study-step" data-step="1">
+        <h1 class="study-word">{{ word.word }}</h1>
+    </div>
+
+    <!-- Step 2: Turkish translation -->
+    <div class="study-step is-hidden" data-step="2">
+        <p class="study-translation">{{ word.turkish_translation }}</p>
+    </div>
+
+    <!-- Step 3: Pronunciation + audio -->
+    <div class="study-step is-hidden" data-step="3">
+        {% if word.pronunciation %}
+        <p class="study-pronunciation">{{ word.pronunciation }}</p>
+        {% endif %}
+        <button type="button" id="play-audio" class="btn btn-secondary">🔊 Listen</button>
+    </div>
+
+    <!-- Step 4: Image -->
+    <div class="study-step is-hidden" data-step="4">
+        <div class="study-image-wrap" id="study-image-wrap">
+            <img class="study-image"
+                 id="study-image"
+                 src="{{ word.image_url or '' }}"
+                 alt="Image representing {{ word.word }}" />
+        </div>
+    </div>
+
+    <!-- Step 5: Example sentence (+ Turkish) -->
+    <div class="study-step is-hidden" data-step="5">
+        {% if word.example_sentence %}
+        <blockquote class="study-example" id="study-example">{{ word.example_sentence }}</blockquote>
+        <button type="button" id="play-example" class="btn btn-small">🔊 Play example</button>
+        {% endif %}
+        {% if word.example_sentence_tr %}
+        <p class="study-example-tr muted">{{ word.example_sentence_tr }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Step 6 + 7 + 8: User sentence, recording, save -->
+    <div class="study-step is-hidden" data-step="6">
+        <label for="user-sentence">Write your own sentence using "{{ word.word }}"</label>
+        <textarea id="user-sentence" rows="3"
+                  placeholder="Type your sentence...">{{ answer.user_sentence if answer else "" }}</textarea>
+
+        <div class="record-controls">
+            <button type="button" id="record-btn" class="btn btn-small">🎤 Record</button>
+            <button type="button" id="stop-btn" class="btn btn-small" disabled>⏹ Stop</button>
+            <span id="record-status" class="muted"></span>
+        </div>
+
+        <!-- Playback of the just-recorded or previously saved audio -->
+        <audio id="recording-playback" controls
+               class="recording-playback {% if not (answer and answer.recording_url) %}is-hidden{% endif %}"
+               src="{{ answer.recording_url if (answer and answer.recording_url) else '' }}"></audio>
+
+        <button type="button" id="save-answer" class="btn btn-primary">💾 Save answer</button>
+        <span id="save-status" class="save-status"></span>
+    </div>
+
+    <!-- "Show next" reveal button, advanced by study.js -->
+    <div class="reveal-controls">
+        <button type="button" id="reveal-next" class="btn btn-primary">Show meaning ▾</button>
+    </div>
+</section>
+
+<!-- Navigation: single step (±1) and multi-step jumps (±10, ±100) -->
+<nav class="study-nav">
+    <div class="nav-group">
+        {% if not (review_next_url is defined and review_next_url) %}
+        {% for step, target in nav.jumps_back %}
+        {% if target is not none %}
+        <a class="btn btn-small btn-secondary" href="/study/card/{{ target }}?{{ nav_qs }}">-{{ step }}</a>
+        {% else %}
+        <span class="btn btn-small btn-secondary is-disabled">-{{ step }}</span>
+        {% endif %}
+        {% endfor %}
+
+        {% if nav.prev_1 is not none %}
+        <a class="btn btn-secondary" href="/study/card/{{ nav.prev_1 }}?{{ nav_qs }}">← Prev</a>
+        {% else %}
+        <span class="btn btn-secondary is-disabled">← Prev</span>
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="nav-group">
+        {% if review_next_url is defined and review_next_url %}
+        <a class="btn btn-primary" href="{{ review_next_url }}">Next due →</a>
+        {% elif nav.next_1 is not none %}
+        <a class="btn btn-primary" href="/study/card/{{ nav.next_1 }}?{{ nav_qs }}">Next →</a>
+        {% elif finish_url is defined and finish_url %}
+        <a class="btn btn-primary" href="{{ finish_url }}">Finish ✓</a>
+        {% else %}
+        <span class="btn btn-primary is-disabled">Next →</span>
+        {% endif %}
+
+        {% if not (review_next_url is defined and review_next_url) %}
+        {% for step, target in nav.jumps_fwd %}
+        {% if target is not none %}
+        <a class="btn btn-small btn-secondary" href="/study/card/{{ target }}?{{ nav_qs }}">+{{ step }}</a>
+        {% else %}
+        <span class="btn btn-small btn-secondary is-disabled">+{{ step }}</span>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</nav>
+
+<!-- Quick jump to any word number in this set (not in review mode) -->
+{% if not (review_next_url is defined and review_next_url) %}
+<form class="study-jump" method="get" action="/study/card/0">
+    <span class="muted">Go to word #</span>
+    <input type="number" id="jump-input" min="1" max="{{ total }}" value="{{ position + 1 }}"
+           data-qs="{{ nav_qs }}" aria-label="Go to word number" />
+    <button type="button" id="jump-go" class="btn btn-small">Go</button>
+</form>
+{% endif %}
+
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/speech.js') }}"></script>
+<script src="{{ url_for('static', path='js/audio.js') }}"></script>
+<script src="{{ url_for('static', path='js/recorder.js') }}"></script>
+<script src="{{ url_for('static', path='js/answers.js') }}"></script>
+<script src="{{ url_for('static', path='js/study.js') }}"></script>
+{% endblock %}

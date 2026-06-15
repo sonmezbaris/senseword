@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Study — Words by level — SenseWord{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Study</h1>
+    <span class="muted">{{ answered_total }} answered · {{ level_counts['all'] }} words total</span>
+</div>
+
+<!-- Level filter tabs -->
+<div class="level-tabs">
+    <a class="level-tab {% if level == 'all' %}is-active{% endif %}"
+       href="/study?level=all&size={{ size }}">
+        All <span class="tab-count">{{ level_counts['all'] }}</span>
+    </a>
+    {% for lvl in levels %}
+    <a class="level-tab {% if level == lvl %}is-active{% endif %}"
+       href="/study?level={{ lvl }}&size={{ size }}">
+        {{ lvl|capitalize }} <span class="tab-count">{{ level_counts[lvl] }}</span>
+    </a>
+    {% endfor %}
+</div>
+
+{% if total == 0 %}
+<p class="muted">No words in this level yet.</p>
+{% else %}
+
+<!-- Page-size selector + range info -->
+<div class="list-controls">
+    <div class="page-size">
+        <span class="muted">Show per page:</span>
+        {% for s in page_sizes %}
+        <a class="size-link {% if s == size %}is-active{% endif %}"
+           href="/study?level={{ level }}&size={{ s }}&page=1">{{ s }}</a>
+        {% endfor %}
+    </div>
+    <div class="muted">
+        Words {{ (page - 1) * size + 1 }}–{{ [page * size, total] | min }} of {{ total }}
+    </div>
+</div>
+
+<!-- Pagination (top) -->
+{% set pager %}
+<nav class="pager">
+    <a class="btn btn-small {% if page <= 1 %}is-disabled{% endif %}"
+       href="/study?level={{ level }}&size={{ size }}&page=1">« First</a>
+    <a class="btn btn-small {% if page <= 1 %}is-disabled{% endif %}"
+       href="/study?level={{ level }}&size={{ size }}&page={{ page - 1 }}">‹ Prev</a>
+
+    <form class="pager-jump" method="get" action="/study">
+        <input type="hidden" name="level" value="{{ level }}" />
+        <input type="hidden" name="size" value="{{ size }}" />
+        <input type="number" name="page" min="1" max="{{ total_pages }}"
+               value="{{ page }}" aria-label="Page number" />
+        <span class="muted">/ {{ total_pages }}</span>
+        <button type="submit" class="btn btn-small">Go</button>
+    </form>
+
+    <a class="btn btn-small {% if page >= total_pages %}is-disabled{% endif %}"
+       href="/study?level={{ level }}&size={{ size }}&page={{ page + 1 }}">Next ›</a>
+    <a class="btn btn-small {% if page >= total_pages %}is-disabled{% endif %}"
+       href="/study?level={{ level }}&size={{ size }}&page={{ total_pages }}">Last »</a>
+</nav>
+{% endset %}
+
+{{ pager }}
+
+<!-- Word grid -->
+<div class="word-grid">
+    {% for row in rows %}
+    <a class="word-cell {% if row.answered %}is-answered{% endif %}"
+       href="/study/card/{{ row.position }}?level={{ level }}&size={{ size }}">
+        <span class="word-cell-index">{{ row.position + 1 }}</span>
+        <span class="word-cell-main">
+            <strong>{{ row.word.word }}</strong>
+            <span class="word-cell-tr muted">{{ row.word.turkish_translation }}</span>
+        </span>
+        <span class="badge badge-{{ row.word.level }}">{{ row.word.level[:3] }}</span>
+        {% if row.answered %}<span class="answered-check" title="Answered">✓</span>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+
+{{ pager }}
+
+{% endif %}
+{% endblock %}

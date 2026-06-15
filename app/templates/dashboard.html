@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — SenseWord{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p class="muted">
+    Signed in as {{ user.email }}
+    {% if user.learning_goal %}
+    · Goal: <span class="badge badge-exam">{{ user.learning_goal }}</span>
+    <a class="muted" href="/onboarding">change</a>
+    {% endif %}
+</p>
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.total_words }}</span>
+        <span class="stat-label">Total words</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.learned_words }}</span>
+        <span class="stat-label">Learned</span>
+    </div>
+    <div class="stat-card highlight">
+        <span class="stat-number">{{ stats.due_for_review }}</span>
+        <span class="stat-label">Due for review</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.reviews_today }}</span>
+        <span class="stat-label">Reviews today</span>
+    </div>
+</section>
+
+{% if mission %}
+<section class="mission-card {% if mission.completed %}is-complete{% endif %}">
+    <div class="mission-head">
+        <h2>Today's Mission</h2>
+        {% if mission.completed %}
+        <span class="badge badge-mastered">✓ Completed</span>
+        {% endif %}
+    </div>
+
+    {% for key, label in [
+        ('new_words', 'New words'),
+        ('review_words', 'Review words'),
+        ('voice_practices', 'Voice practices')
+    ] %}
+    {% set item = mission[key] %}
+    <div class="mission-line">
+        <div class="mission-line-top">
+            <span>{{ label }}</span>
+            <span class="muted">{{ item.done }} / {{ item.goal }}{% if item.met %} ✓{% endif %}</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" style="width: {{ item.percent }}%;"></div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
+<section class="review-card">
+    <div class="review-card-head">
+        <h2>Spaced repetition</h2>
+        <div class="review-card-actions">
+            <a class="btn btn-primary" href="/study/review">▶ Review Due Words</a>
+            <a class="btn btn-secondary" href="/study/recall">🔁 Turkish → English</a>
+            <a class="btn btn-secondary" href="/study/listening">🎧 Listening</a>
+        </div>
+    </div>
+    <div class="review-stats">
+        <div class="review-stat {% if progress.due_reviews %}is-due{% endif %}">
+            <span class="review-stat-num">{{ progress.due_reviews }}</span>
+            <span class="muted">due today</span>
+        </div>
+        <div class="review-stat">
+            <span class="review-stat-num">{{ progress.weak_words }}</span>
+            <span class="muted"><a href="/weak-words">weak words</a></span>
+        </div>
+        <div class="review-stat">
+            <span class="review-stat-num">{{ progress.mastered_words }}</span>
+            <span class="muted">mastered</span>
+        </div>
+    </div>
+</section>
+
+<div class="cta-row">
+    <a class="btn btn-primary" href="/study">Start studying</a>
+    <a class="btn btn-secondary" href="/weak-words">Weak words</a>
+    <a class="btn btn-secondary" href="/review">Review session</a>
+    <a class="btn btn-secondary" href="/vocabulary/add">Add a new word</a>
+</div>
+
+<section>
+    <h2>Recent words</h2>
+    {% if recent %}
+    <ul class="word-list">
+        {% for w in recent %}
+        <li class="word-row">
+            <a href="/learn/{{ w.id }}">
+                <strong>{{ w.word }}</strong> — {{ w.meaning }}
+            </a>
+            <span class="badge badge-{{ w.status }}">{{ w.status }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No words yet. <a href="/vocabulary/add">Add your first word</a>.</p>
+    {% endif %}
+</section>
+{% endblock %}

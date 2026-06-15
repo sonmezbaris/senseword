@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Turkish → English — SenseWord{% endblock %}
+
+{% block content %}
+<div class="study-topbar">
+    <a class="btn btn-small btn-secondary" href="/dashboard">☰ Dashboard</a>
+    <span class="muted"><strong>Turkish → English</strong> · recall the word</span>
+</div>
+
+{% if not word %}
+<section class="empty-state">
+    <div class="complete-badge">✅</div>
+    <h1>All caught up!</h1>
+    <p class="muted">No words to recall right now. Study some words first.</p>
+    <a class="btn btn-primary" href="/study">Study new words</a>
+    <a class="btn btn-secondary" href="/dashboard">Back to dashboard</a>
+</section>
+
+{% elif result %}
+<!-- Result view -->
+<section class="recall-card">
+    <div class="recall-result {% if result.is_correct %}is-correct{% else %}is-wrong{% endif %}">
+        {% if result.is_correct %}✓ Correct!{% else %}✗ Incorrect{% endif %}
+    </div>
+
+    <p class="muted">Turkish meaning</p>
+    <h2 class="recall-meaning">{{ word.turkish_translation }}</h2>
+
+    <div class="recall-answer-row">
+        <div>
+            <span class="muted">Your answer</span>
+            <p class="recall-your-answer">{{ result.user_answer or "—" }}</p>
+        </div>
+        <div>
+            <span class="muted">Correct word</span>
+            <p class="recall-correct-word">{{ result.correct_word }}</p>
+        </div>
+    </div>
+
+    {% if word.example_sentence %}
+    <blockquote class="study-example">{{ word.example_sentence }}</blockquote>
+    {% if word.example_sentence_tr %}
+    <p class="study-example-tr muted">{{ word.example_sentence_tr }}</p>
+    {% endif %}
+    {% endif %}
+
+    <p class="muted">Memory strength: {{ result.memory_strength }}/100</p>
+
+    <div class="recall-actions">
+        <a class="btn btn-primary" href="/study/recall">Next word →</a>
+        <a class="btn btn-secondary" href="/dashboard">Finish</a>
+    </div>
+</section>
+
+{% else %}
+<!-- Question view -->
+<section class="recall-card">
+    <p class="muted">What is the English word for?</p>
+    <h2 class="recall-meaning">{{ word.turkish_translation }}</h2>
+
+    <form method="post" action="/study/recall" class="recall-form">
+        <input type="hidden" name="catalog_word_id" value="{{ word.id }}" />
+        <input type="text" name="answer" class="recall-input"
+               placeholder="Type the English word..."
+               autocomplete="off" autocapitalize="off" autocorrect="off"
+               spellcheck="false" autofocus />
+        <button type="submit" class="btn btn-primary">Check answer</button>
+    </form>
+</section>
+{% endif %}
+{% endblock %}

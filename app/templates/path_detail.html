@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ path.name }} — SenseWord{% endblock %}
+
+{% block content %}
+<p><a class="muted" href="/paths">← All learning paths</a></p>
+
+<section class="path-detail-card">
+    <div class="path-card-head">
+        <h1>{{ path.name }}</h1>
+        <span class="badge badge-{{ path.level }}">{{ path.level }}</span>
+    </div>
+
+    {% if path.description %}
+    <p class="muted">{{ path.description }}</p>
+    {% endif %}
+
+    <div class="path-detail-meta">
+        {% if path.goal_type %}<span class="badge badge-exam">{{ path.goal_type }}</span>{% endif %}
+        <span class="stat-inline"><strong>{{ word_count }}</strong> words</span>
+        <span class="stat-inline">Level: <strong>{{ path.level|capitalize }}</strong></span>
+    </div>
+
+    {% if word_count > 0 and progress and progress.completed %}
+    <div class="path-progress muted">✓ Completed · {{ studied }} of {{ word_count }} words studied</div>
+    {% elif word_count > 0 and progress and progress.current_index > 0 %}
+    <div class="path-progress muted">
+        In progress · on word {{ resume_index + 1 }} of {{ word_count }}
+        ({{ studied }} studied)
+    </div>
+    {% endif %}
+
+    {% if word_count > 0 %}
+    <div class="path-detail-actions">
+        {% if progress and progress.completed %}
+        <a class="btn btn-primary btn-start" href="/study/card/0?path={{ path.slug }}">🔁 Study again</a>
+        {% elif progress and progress.current_index > 0 %}
+        <a class="btn btn-primary btn-start" href="/study/card/{{ resume_index }}?path={{ path.slug }}">▶ Continue study</a>
+        <a class="btn btn-secondary" href="/study/card/0?path={{ path.slug }}">Start over</a>
+        {% else %}
+        <a class="btn btn-primary btn-start" href="/study/card/0?path={{ path.slug }}">▶ Start study</a>
+        {% endif %}
+    </div>
+    {% else %}
+    <span class="btn btn-primary is-disabled">No words in this path</span>
+    {% endif %}
+</section>
+
+{% if words %}
+<h2 class="section-title">Words in this path</h2>
+<ol class="path-word-list">
+    {% for w in words %}
+    <li class="path-word-row">
+        <a href="/study/card/{{ loop.index0 }}?path={{ path.slug }}">
+            <strong>{{ w.word }}</strong>
+            <span class="muted">— {{ w.turkish_translation }}</span>
+        </a>
+        <span class="badge badge-{{ w.level }}">{{ w.level[:3] }}</span>
+    </li>
+    {% endfor %}
+</ol>
+{% endif %}
+{% endblock %}
