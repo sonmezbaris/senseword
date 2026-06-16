@@ -13,6 +13,7 @@ from app.models.learning_path import (
 from app.models.mission import DailyMissionProgress
 from app.models.review import ReviewLog
 from app.models.user import User
+from app.models.usage import UserDailyUsage
 from app.models.vocabulary import Vocabulary
 from app.models.word_progress import UserWordProgress
 
@@ -27,4 +28,5 @@ __all__ = [
     "LearningPathProgress",
     "UserWordProgress",
     "DailyMissionProgress",
+    "UserDailyUsage",
 ]

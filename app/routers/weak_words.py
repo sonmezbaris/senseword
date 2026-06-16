@@ -5,13 +5,13 @@ still learning); this router only fetches and renders.
 """
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.user import User
 from app.routers import templates
-from app.services import progress_service
+from app.services import progress_service, subscription_service
 from app.services.auth_service import get_current_user
 
 router = APIRouter(tags=["weak-words"])
@@ -24,6 +24,9 @@ def weak_words_page(
     user: User = Depends(get_current_user),
 ):
     """List the user's weak words with stats and study actions."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     rows = progress_service.list_weak_words(db, user.id)
     return templates.TemplateResponse(
         request,

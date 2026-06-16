@@ -37,6 +37,7 @@ from app.routers import (
     paths,
     review,
     study,
+    subscription,
     templates,
     vocabulary,
     weak_words,
@@ -96,6 +97,7 @@ app.include_router(review.router)
 app.include_router(study.router)
 app.include_router(paths.router)
 app.include_router(weak_words.router)
+app.include_router(subscription.router)
 app.include_router(api.router)
 
 

@@ -97,6 +97,52 @@ DATABASE_URL = postgresql+psycopg://user:pass@host:5432/senseword
 The app will use it automatically, log it (credentials masked) on startup, and
 seed it once on first boot.
 
+## Subscription system
+
+SenseWord supports **Free**, **Premium**, and **Founding Member** plans.
+
+### Free vs Premium limits
+
+| Feature | Free | Premium / Founding |
+|---|---|---|
+| New words per day | 10 | Unlimited |
+| Reviews per day | 20 | Unlimited |
+| Learning paths | Daily English only | All paths (IELTS, TOEFL, Business…) |
+| Weak words review | 🔒 | ✓ |
+| Listening review | 🔒 | ✓ |
+| Turkish → English review | 🔒 | ✓ |
+
+Free users who hit a limit or open a Premium feature are redirected to `/upgrade`
+(not a hard error page).
+
+### Manual premium activation
+
+No payment provider is wired yet. Activate plans from the terminal:
+
+```bash
+cd senseword
+python scripts/activate_premium.py user@example.com premium
+python scripts/activate_premium.py user@example.com founding
+```
+
+This sets `plan`, `subscription_status=active`, and `subscription_provider=manual`.
+Existing users remain on **Free** until activated.
+
+### Future payment provider integration
+
+`app/services/subscription_service.py` contains placeholder hooks:
+
+- TODO: connect Stripe Checkout
+- TODO: add Lemon Squeezy webhook
+- TODO: add Paddle webhook
+
+Set `DATABASE_URL` in production so subscription state survives redeploys.
+
+### Public pages
+
+- `/pricing` — plan comparison (no login required)
+- `/upgrade` — shown when a Free user needs Premium
+
 ## Curated vocabulary study flow (`/study`)
 
 Preloaded exam vocabulary (TOEFL / IELTS / SAT / GRE / academic) lives in the

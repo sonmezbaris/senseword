@@ -11,6 +11,20 @@
 {% if rows %}
 <div class="path-grid">
     {% for row in rows %}
+    {% if row.locked %}
+    <a class="path-card path-card-locked" href="/upgrade">
+        <div class="path-card-head">
+            <h2 class="path-card-title">{{ row.path.name }}</h2>
+            <span class="badge badge-exam">Premium 🔒</span>
+        </div>
+        {% if row.path.description %}
+        <p class="path-card-desc muted">{{ row.path.description }}</p>
+        {% endif %}
+        <div class="path-card-meta">
+            <span class="muted">{{ row.word_count }} words · Upgrade to unlock</span>
+        </div>
+    </a>
+    {% else %}
     <a class="path-card" href="/paths/{{ row.path.slug }}">
         <div class="path-card-head">
             <h2 class="path-card-title">{{ row.path.name }}</h2>
@@ -24,6 +38,7 @@
             <span class="muted">{{ row.word_count }} words</span>
         </div>
     </a>
+    {% endif %}
     {% endfor %}
 </div>
 {% else %}

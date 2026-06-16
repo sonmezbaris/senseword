@@ -171,10 +171,21 @@
                         }
                         recordedBlob = null;
                     })
-                    .catch(function () {
+                    .catch(function (err) {
                         if (saveStatus) {
-                            saveStatus.textContent = "Save failed — try again";
+                            var msg = "Save failed — try again";
+                            if (err.data && err.data.message) {
+                                msg = err.data.message;
+                            }
+                            saveStatus.textContent = msg;
                             saveStatus.className = "save-status save-error";
+                        }
+                        if (err.data && err.data.upgrade_url) {
+                            setTimeout(function () {
+                                if (confirm("Upgrade to Premium for unlimited access?")) {
+                                    window.location.href = err.data.upgrade_url;
+                                }
+                            }, 100);
                         }
                     })
                     .finally(function () {

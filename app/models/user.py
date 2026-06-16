@@ -7,36 +7,63 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
+# Subscription plan identifiers (stored in ``plan`` column).
+PLAN_FREE = "free"
+PLAN_PREMIUM = "premium"
+PLAN_FOUNDING = "founding"
+
+# Subscription lifecycle states (stored in ``subscription_status``).
+SUB_INACTIVE = "inactive"
+SUB_ACTIVE = "active"
+SUB_TRIALING = "trialing"
+SUB_CANCELED = "canceled"
+SUB_EXPIRED = "expired"
+
 
 class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    # Stores the bcrypt/pbkdf2 hash, never the plain password.
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
-    # Onboarding: the learner's chosen goal (e.g. "IELTS"). Null until selected,
-    # which is how we know to show the onboarding flow.
     learning_goal: Mapped[str | None] = mapped_column(String, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    # One user owns many vocabulary words.
+    # --- Subscription (payment provider wired later) -------------------------
+    plan: Mapped[str] = mapped_column(String, default=PLAN_FREE, nullable=False)
+    subscription_status: Mapped[str] = mapped_column(
+        String, default=SUB_INACTIVE, nullable=False
+    )
+    subscription_provider: Mapped[str] = mapped_column(
+        String, default="manual", nullable=False
+    )
+    subscription_customer_id: Mapped[str | None] = mapped_column(String, nullable=True)
+    subscription_id: Mapped[str | None] = mapped_column(String, nullable=True)
+    subscription_current_period_end: Mapped[datetime | None] = mapped_column(
+        DateTime, nullable=True
+    )
+
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
+
     vocabulary = relationship(
         "Vocabulary",
         back_populates="owner",
         cascade="all, delete-orphan",
     )
-
-    # Per-word learning progress across the curated catalog.
     word_progress = relationship(
         "UserWordProgress",
         back_populates="user",
         cascade="all, delete-orphan",
     )
-
-    # Daily mission progress rows (one per day).
     daily_missions = relationship(
         "DailyMissionProgress",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    daily_usage = relationship(
+        "UserDailyUsage",
         back_populates="user",
         cascade="all, delete-orphan",
     )

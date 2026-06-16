@@ -24,7 +24,7 @@ from fastapi import (
     Request,
     UploadFile,
 )
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -35,6 +35,8 @@ from app.services import (
     learning_path_service,
     mission_service,
     progress_service,
+    subscription_service,
+    usage_service,
 )
 from app.services.auth_service import get_current_user
 
@@ -193,10 +195,13 @@ def _render_catalog_card(
 
 def _render_path_card(
     request: Request, db: Session, user: User, position: int, slug: str
-) -> HTMLResponse:
+):
     lp = learning_path_service.get_path_by_slug(db, slug)
     if not lp or not lp.is_active:
         raise HTTPException(status_code=404, detail="Learning path not found")
+
+    if not subscription_service.can_access_path(user, lp.slug):
+        return RedirectResponse(url="/upgrade", status_code=303)
 
     total = learning_path_service.count_path_words(db, lp.id)
     if total == 0:
@@ -250,6 +255,9 @@ def study_review(
     ``next_review_at`` moves into the future, so reloading this page serves the
     next due word. When nothing is due, a short "all caught up" state shows.
     """
+    if not usage_service.can_review_word(db, user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     due_total = progress_service.count_due_reviews(db, user.id)
     due = progress_service.get_next_due_word(db, user.id)
     if not due:
@@ -352,6 +360,9 @@ def study_weak(
     user: User = Depends(get_current_user),
 ):
     """Review weak words one at a time, weakest first (reuses the study card)."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     weak = progress_service.get_next_weak_word(db, user.id)
     if not weak:
         return templates.TemplateResponse(
@@ -399,6 +410,9 @@ def recall_question(
     user: User = Depends(get_current_user),
 ):
     """Turkish → English reverse review: show the meaning, ask for the word."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     word = _pick_recall_word(db, user.id)
     if not word:
         return templates.TemplateResponse(
@@ -420,6 +434,11 @@ def recall_submit(
     user: User = Depends(get_current_user),
 ):
     """Grade a recall answer (case/space-insensitive) and update progress."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+    if not usage_service.can_review_word(db, user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     word = catalog_service.get_word_by_id(db, catalog_word_id)
     if not word:
         raise HTTPException(status_code=404, detail="Word not found")
@@ -433,6 +452,7 @@ def recall_submit(
     )
     # Recall practice counts as a review toward the daily mission.
     mission_service.record_review_word(db, user.id)
+    usage_service.increment_review_usage(db, user.id)
 
     return templates.TemplateResponse(
         request,
@@ -457,6 +477,9 @@ def listening_question(
     user: User = Depends(get_current_user),
 ):
     """Listening review: the user hears the word (TTS) and types what they heard."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     word = _pick_recall_word(db, user.id)
     if not word:
         return templates.TemplateResponse(
@@ -478,6 +501,11 @@ def listening_submit(
     user: User = Depends(get_current_user),
 ):
     """Grade a listening answer (case/space-insensitive) and update progress."""
+    if not subscription_service.user_has_premium_access(user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+    if not usage_service.can_review_word(db, user):
+        return RedirectResponse(url="/upgrade", status_code=303)
+
     word = catalog_service.get_word_by_id(db, catalog_word_id)
     if not word:
         raise HTTPException(status_code=404, detail="Word not found")
@@ -489,6 +517,7 @@ def listening_submit(
         db, user.id, catalog_word_id, "correct" if is_correct else "wrong"
     )
     mission_service.record_review_word(db, user.id)
+    usage_service.increment_review_usage(db, user.id)
 
     return templates.TemplateResponse(
         request,
@@ -563,6 +592,28 @@ async def save_answer(
     prior = progress_service.get_or_create_progress(db, user.id, catalog_word_id)
     is_new_word = prior.times_seen == 0
 
+    if is_new_word:
+        if not usage_service.can_study_new_word(db, user):
+            return JSONResponse(
+                {
+                    "ok": False,
+                    "error": "daily_new_word_limit",
+                    "message": "Günlük 10 yeni kelime limitine ulaştınız.",
+                    "upgrade_url": "/upgrade",
+                },
+                status_code=403,
+            )
+    elif not usage_service.can_review_word(db, user):
+        return JSONResponse(
+            {
+                "ok": False,
+                "error": "daily_review_limit",
+                "message": "Günlük 20 tekrar limitine ulaştınız.",
+                "upgrade_url": "/upgrade",
+            },
+            status_code=403,
+        )
+
     recording_url = None
     if audio is not None and audio.filename:
         recording_url = await _store_recording(user.id, catalog_word_id, audio)
@@ -584,8 +635,10 @@ async def save_answer(
     # review; a recording counts as a voice practice.
     if is_new_word:
         mission_service.record_new_word(db, user.id)
+        usage_service.increment_new_word_usage(db, user.id)
     else:
         mission_service.record_review_word(db, user.id)
+        usage_service.increment_review_usage(db, user.id)
     if recording_url:
         mission_service.record_voice_practice(db, user.id)
 

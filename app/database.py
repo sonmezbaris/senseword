@@ -88,3 +88,28 @@ def _run_lightweight_migrations() -> None:
     if "learning_goal" not in user_columns:
         with engine.begin() as conn:
             conn.execute(text("ALTER TABLE users ADD COLUMN learning_goal VARCHAR"))
+
+    # Subscription columns (existing users default to Free / inactive).
+    subscription_columns = [
+        ("plan", "VARCHAR", "'free'"),
+        ("subscription_status", "VARCHAR", "'inactive'"),
+        ("subscription_provider", "VARCHAR", "'manual'"),
+        ("subscription_customer_id", "VARCHAR", None),
+        ("subscription_id", "VARCHAR", None),
+        ("subscription_current_period_end", "DATETIME", None),
+        ("updated_at", "DATETIME", None),
+    ]
+    for col_name, col_type, default in subscription_columns:
+        if col_name not in user_columns:
+            with engine.begin() as conn:
+                if default is not None:
+                    conn.execute(
+                        text(
+                            f"ALTER TABLE users ADD COLUMN {col_name} "
+                            f"{col_type} DEFAULT {default}"
+                        )
+                    )
+                else:
+                    conn.execute(
+                        text(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}")
+                    )

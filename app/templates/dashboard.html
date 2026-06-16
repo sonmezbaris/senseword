@@ -12,6 +12,34 @@
     {% endif %}
 </p>
 
+<section class="plan-card">
+    <div class="plan-card-head">
+        <div>
+            <span class="muted">Current plan</span>
+            <h2 class="plan-title">{{ plan_label }}</h2>
+        </div>
+        {% if not premium %}
+        <a class="btn btn-primary btn-small" href="/upgrade">Upgrade to Premium</a>
+        {% else %}
+        <span class="badge badge-mastered">Unlimited access active</span>
+        {% endif %}
+    </div>
+    {% if usage.unlimited %}
+    <p class="muted">Premium access: unlimited new words and reviews.</p>
+    {% else %}
+    <div class="usage-lines">
+        <div class="usage-line">
+            <span>New words today</span>
+            <strong>{{ usage.new_words }} / {{ usage.new_words_limit }}</strong>
+        </div>
+        <div class="usage-line">
+            <span>Reviews today</span>
+            <strong>{{ usage.reviews }} / {{ usage.reviews_limit }}</strong>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
 <section class="stats-grid">
     <div class="stat-card">
         <span class="stat-number">{{ stats.total_words }}</span>
@@ -64,8 +92,17 @@
         <h2>Spaced repetition</h2>
         <div class="review-card-actions">
             <a class="btn btn-primary" href="/study/review">▶ Review Due Words</a>
+            {% if premium %}
             <a class="btn btn-secondary" href="/study/recall">🔁 Turkish → English</a>
             <a class="btn btn-secondary" href="/study/listening">🎧 Listening</a>
+            {% else %}
+            <a class="btn btn-secondary feature-lock" href="/upgrade">
+                🔒 Turkish → English <span class="badge badge-exam">Premium</span>
+            </a>
+            <a class="btn btn-secondary feature-lock" href="/upgrade">
+                🔒 Listening Review <span class="badge badge-exam">Premium</span>
+            </a>
+            {% endif %}
         </div>
     </div>
     <div class="review-stats">
@@ -75,7 +112,11 @@
         </div>
         <div class="review-stat">
             <span class="review-stat-num">{{ progress.weak_words }}</span>
+            {% if premium %}
             <span class="muted"><a href="/weak-words">weak words</a></span>
+            {% else %}
+            <span class="muted"><a href="/upgrade">weak words 🔒</a></span>
+            {% endif %}
         </div>
         <div class="review-stat">
             <span class="review-stat-num">{{ progress.mastered_words }}</span>
@@ -86,7 +127,11 @@
 
 <div class="cta-row">
     <a class="btn btn-primary" href="/study">Start studying</a>
+    {% if premium %}
     <a class="btn btn-secondary" href="/weak-words">Weak words</a>
+    {% else %}
+    <a class="btn btn-secondary feature-lock" href="/upgrade">🔒 Weak Words — Premium</a>
+    {% endif %}
     <a class="btn btn-secondary" href="/review">Review session</a>
     <a class="btn btn-secondary" href="/vocabulary/add">Add a new word</a>
 </div>

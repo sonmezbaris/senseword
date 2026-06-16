@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing — SenseWord{% endblock %}
+
+{% block content %}
+<h1>Choose your plan</h1>
+<p class="muted">Start free, upgrade when you're ready for unlimited study and exam-focused paths.</p>
+
+<div class="pricing-grid">
+    <section class="pricing-card">
+        <h2>Free</h2>
+        <p class="pricing-price">€0</p>
+        <ul class="pricing-features">
+            <li>10 new words per day</li>
+            <li>20 reviews per day</li>
+            <li>Basic 8-step study flow</li>
+            <li>Daily English learning path</li>
+            <li>Basic dashboard</li>
+            <li>Write your own sentences</li>
+        </ul>
+        {% if user %}
+        <a class="btn btn-secondary" href="/dashboard">Current plan</a>
+        {% else %}
+        <a class="btn btn-primary" href="/register">Start Free</a>
+        {% endif %}
+    </section>
+
+    <section class="pricing-card pricing-card-featured">
+        <span class="badge badge-exam">Popular</span>
+        <h2>Premium</h2>
+        <p class="pricing-price">€4.99<span class="pricing-period">/month</span></p>
+        <ul class="pricing-features">
+            <li>Unlimited new words &amp; reviews</li>
+            <li>All learning paths (IELTS, TOEFL, Business…)</li>
+            <li>Weak words review</li>
+            <li>Listening review</li>
+            <li>Turkish → English review</li>
+            <li>Advanced spaced repetition</li>
+            <li>Detailed progress dashboard</li>
+        </ul>
+        {% if premium %}
+        <span class="btn btn-secondary is-disabled">Premium active</span>
+        {% else %}
+        <a class="btn btn-primary" href="/upgrade">Join Premium Waitlist</a>
+        {% endif %}
+    </section>
+
+    <section class="pricing-card">
+        <h2>Founding Member</h2>
+        <p class="pricing-price">Limited</p>
+        <ul class="pricing-features">
+            <li>Lifetime Premium access</li>
+            <li>Early supporter pricing</li>
+            <li>All current &amp; future Premium features</li>
+            <li>Manual activation for now</li>
+        </ul>
+        <a class="btn btn-secondary" href="mailto:support@senseword.app?subject=Founding%20Member%20Request">Request Access</a>
+    </section>
+</div>
+{% endblock %}

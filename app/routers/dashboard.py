@@ -11,6 +11,8 @@ from app.services import (
     mission_service,
     progress_service,
     review_service,
+    subscription_service,
+    usage_service,
     vocabulary_service,
 )
 from app.services.auth_service import get_current_user
@@ -34,6 +36,9 @@ def dashboard(
     progress = progress_service.progress_summary(db, user.id)
     # Today's daily mission progress.
     mission = mission_service.get_today_summary(db, user.id)
+    premium = subscription_service.user_has_premium_access(user)
+    plan_label = subscription_service.get_user_plan_label(user)
+    usage = usage_service.get_today_usage_summary(db, user)
     return templates.TemplateResponse(
         request,
         "dashboard.html",
@@ -43,5 +48,8 @@ def dashboard(
             "recent": recent,
             "progress": progress,
             "mission": mission,
+            "premium": premium,
+            "plan_label": plan_label,
+            "usage": usage,
         },
     )

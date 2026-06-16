@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Upgrade to Premium — SenseWord{% endblock %}
+
+{% block content %}
+<section class="upgrade-card">
+    <div class="complete-badge">⭐</div>
+    <h1>Upgrade to Premium</h1>
+    <p class="muted">
+        Bu özellik Premium üyelik gerektirir. Sınırsız kelime çalışması, gelişmiş
+        tekrar modları ve sınav odaklı learning path'leri açmak için Premium'a geç.
+    </p>
+
+    <div class="upgrade-benefits">
+        <h2>Premium includes</h2>
+        <ul>
+            <li>Unlimited new words &amp; reviews every day</li>
+            <li>IELTS, TOEFL, YDS/YÖKDİL, Business &amp; Academic paths</li>
+            <li>Weak words, Listening &amp; Turkish → English review</li>
+            <li>Advanced spaced repetition &amp; detailed dashboard</li>
+            <li>Coming soon: AI sentence feedback &amp; pronunciation score</li>
+        </ul>
+    </div>
+
+    <p class="pricing-inline"><strong>€4.99/month</strong> — payment integration coming soon.</p>
+
+    <div class="complete-actions">
+        <a class="btn btn-primary" href="/pricing">View pricing</a>
+        {% if user %}
+        <a class="btn btn-secondary" href="/dashboard">Back to dashboard</a>
+        {% else %}
+        <a class="btn btn-secondary" href="/register">Create free account</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

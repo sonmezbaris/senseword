@@ -22,8 +22,14 @@
             body: form,
             credentials: "same-origin",
         }).then(function (response) {
-            if (!response.ok) throw new Error("Save failed");
-            return response.json();
+            return response.json().then(function (data) {
+                if (!response.ok) {
+                    var err = new Error(data.message || "Save failed");
+                    err.data = data;
+                    throw err;
+                }
+                return data;
+            });
         });
     }
 
