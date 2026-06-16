@@ -73,9 +73,10 @@ def login(
         )
 
     token = auth_service.create_access_token(user.id)
-    # Existing users without a goal are sent through onboarding first.
-    destination = "/dashboard" if user.learning_goal else "/onboarding"
-    response = RedirectResponse(url=destination, status_code=303)
+    # After signing in the user always lands on the goal-selection page
+    # (IELTS / Business / ...), pre-selecting their current goal if any. From
+    # there they go straight into the learning stage for that goal.
+    response = RedirectResponse(url="/onboarding", status_code=303)
     response.set_cookie(
         key=auth_service.SESSION_COOKIE_NAME,
         value=token,

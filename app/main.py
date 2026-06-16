@@ -17,6 +17,7 @@ Or use the helper script (same host/port, reload enabled):
 
 from __future__ import annotations
 
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -25,7 +26,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 
-from app.database import SessionLocal, get_db, init_db
+from app.database import DATABASE_URL, SessionLocal, get_db, init_db, safe_database_url
 from app.models.user import User
 from app.routers import (
     api,
@@ -45,17 +46,32 @@ from app.services.auth_service import get_current_user_optional
 
 BASE_DIR = Path(__file__).resolve().parent
 
+logger = logging.getLogger("senseword")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Log which database we're actually using (credentials masked). This makes
+    # it obvious in the Replit logs whether the deployment points at the same
+    # database as local development.
+    logging.basicConfig(level=logging.INFO)
+    logger.info("SenseWord starting — using database: %s", safe_database_url())
+    if DATABASE_URL.startswith("sqlite"):
+        # The path after "sqlite:///" is the actual file on disk.
+        logger.info("SQLite file path: %s", DATABASE_URL.replace("sqlite:///", "", 1))
+
     # Create tables on startup (MVP convenience; use Alembic for real schema changes).
     init_db()
     # Load the curated vocabulary catalog if the table is empty, then build
-    # a few starter learning paths from it (both steps are idempotent).
+    # the learning paths from it (both steps are idempotent). This is what lets
+    # a fresh Replit deployment populate its own database automatically.
     db = SessionLocal()
     try:
-        seed_service.seed_if_empty(db)
-        learning_path_service.seed_learning_paths(db)
+        seed_result = seed_service.seed_if_empty(db)
+        path_result = learning_path_service.seed_learning_paths(db)
+        logger.info(
+            "Catalog seed: %s | Learning paths: %s", seed_result, path_result
+        )
     finally:
         db.close()
     yield

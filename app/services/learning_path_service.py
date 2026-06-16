@@ -36,6 +36,24 @@ def get_path_by_slug(db: Session, slug: str) -> LearningPath | None:
     return db.query(LearningPath).filter(LearningPath.slug == slug).first()
 
 
+def get_path_by_goal(db: Session, goal: str) -> LearningPath | None:
+    """Find the active learning path tied to an onboarding goal.
+
+    Goals (e.g. "IELTS", "Business English") map 1:1 to a path via its
+    ``goal_type`` field, so after onboarding we can send the user straight to
+    the words for their chosen goal.
+    """
+    return (
+        db.query(LearningPath)
+        .filter(
+            LearningPath.goal_type == goal,
+            LearningPath.is_active.is_(True),
+        )
+        .order_by(LearningPath.id.asc())
+        .first()
+    )
+
+
 def count_path_words(db: Session, path_id: int) -> int:
     return (
         db.query(func.count(LearningPathWord.id))

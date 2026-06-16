@@ -39,6 +39,64 @@ python run.py
 > contains `app/` and `requirements.txt`). From the parent folder or from
 > inside `app/` you will get `ModuleNotFoundError: No module named 'app'`.
 
+## Database configuration
+
+The database is configured via the `DATABASE_URL` environment variable:
+
+- **Not set (default):** a SQLite file at a **stable absolute path** based on
+  the project root — `senseword/senseword.db`. Because the path is absolute
+  (derived from the source file location, not the current working directory),
+  the app always reads/writes the same file no matter where it is launched
+  from. No machine-specific paths are hardcoded.
+- **Set:** any SQLAlchemy URL, e.g.
+  `postgresql+psycopg://user:pass@host:5432/senseword`.
+
+On startup the app logs the active database (with any credentials masked), so
+you can confirm which database is in use:
+
+```
+INFO:senseword:SenseWord starting — using database: sqlite:////app/senseword.db
+INFO:senseword:Catalog seed: {...} | Learning paths: {...}
+```
+
+### Seeding the database on Replit
+
+Replit **Deployments run on a separate filesystem** from the dev workspace, so
+the `senseword.db` you seeded while developing is **not** carried into the
+deployment. That's why a freshly deployed site can come up with no words.
+
+Two ways to make the deployed site show the same words and learning paths:
+
+1. **Automatic (recommended).** Seeding runs on every startup and is
+   idempotent: the catalog is loaded from `app/data/vocabulary_full.json` if
+   the `catalog_words` table is empty, then the six learning paths are built.
+   Just make sure `app/data/vocabulary_full.json` is **committed to the repo**
+   so the deployment can read it, then (re)deploy. Watch the deploy logs for
+   the `Catalog seed:` / `Learning paths:` lines to confirm it populated.
+
+2. **Manual seed (or to force a rebuild).** Open the Replit **Shell** for the
+   deployment/repl and run, from the `senseword/` directory:
+
+   ```bash
+   python scripts/import_vocabulary.py app/data/vocabulary_full.json
+   python scripts/seed_learning_paths.py
+   ```
+
+   Both scripts are idempotent and **never delete existing data** — they only
+   add what's missing.
+
+**Use one persistent database across deploys.** To avoid re-seeding on each
+deployment (and to keep user accounts/progress), point `DATABASE_URL` at a
+persistent database instead of the ephemeral SQLite file. In the Replit
+deployment **Secrets**, set:
+
+```
+DATABASE_URL = postgresql+psycopg://user:pass@host:5432/senseword
+```
+
+The app will use it automatically, log it (credentials masked) on startup, and
+seed it once on first boot.
+
 ## Curated vocabulary study flow (`/study`)
 
 Preloaded exam vocabulary (TOEFL / IELTS / SAT / GRE / academic) lives in the

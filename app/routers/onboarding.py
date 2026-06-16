@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
 from app.routers import templates
-from app.services import auth_service
+from app.services import auth_service, learning_path_service
 from app.services.auth_service import get_current_user
 
 router = APIRouter(tags=["onboarding"])
@@ -51,4 +51,11 @@ def save_onboarding(
         )
 
     auth_service.set_learning_goal(db, user, learning_goal)
-    return RedirectResponse(url="/dashboard", status_code=303)
+
+    # Send the user straight into the learning stage for their goal: the path's
+    # word list, where every word is shown and any one can be opened directly.
+    path = learning_path_service.get_path_by_goal(db, learning_goal)
+    if path is not None:
+        return RedirectResponse(url=f"/paths/{path.slug}", status_code=303)
+    # Fallback: no matching path -> the general study browser.
+    return RedirectResponse(url="/study", status_code=303)

@@ -53,6 +53,17 @@ body {
     color: var(--primary);
 }
 
+/* Keep button-styled nav links (e.g. the Sign in button) looking like buttons
+   instead of inheriting the plain text-link colors above. */
+.navbar nav a.btn {
+    margin-left: 1rem;
+}
+
+.navbar nav a.btn-primary,
+.navbar nav a.btn-primary:hover {
+    color: #fff;
+}
+
 .container {
     max-width: 880px;
     margin: 2rem auto;
