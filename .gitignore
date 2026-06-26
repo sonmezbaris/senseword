@@ -24,3 +24,7 @@ app/static/recordings/*
 !app/static/recordings/.gitkeep
 # Uploaded files
 uploads/
+
+# Generated cloze-test exams (reproducible via scripts/exam_generator.py)
+/generated_exams/
+/exam.json
