@@ -28,3 +28,5 @@ uploads/
 # Generated cloze-test exams (reproducible via scripts/exam_generator.py)
 /generated_exams/
 /exam.json
+# Transient UUID-suffixed generator outputs (canonical samples are committed explicitly)
+examples/*_????????.json
