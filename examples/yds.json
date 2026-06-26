@@ -1,0 +1,446 @@
+{
+  "exam_id": "672ce76f-e4ea-4fda-911d-ae724bb05e1a",
+  "exam_type": "YDS",
+  "display_name": "YDS — Cloze Test Bölümü",
+  "generated_at": "2026-06-26T18:08:35.299754+00:00",
+  "seed": 42,
+  "config": {
+    "total_minutes": 180,
+    "num_options": 5,
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "negative_marking": false,
+    "delivery": "paper",
+    "recommended_minutes_per_passage": 10,
+    "ui_simulation": {}
+  },
+  "instructions": [
+    "Yanlış cevap doğruyu götürmez.",
+    "Sınav toplam 180 dakikadır; Cloze Test bölümü (10 soru) için ideal süre 15-20 dakikadır.",
+    "Kağıt-kalem sınavıdır.",
+    "Gramer, bağlaç ve kelime bilgisi karma sorulur.",
+    "Her soru 5 seçeneklidir (A, B, C, D, E).",
+    "Genellikle 5'er soruluk 2 okuma parçası (toplam 10 boşluk) içerir."
+  ],
+  "sections": [
+    {
+      "section_no": 1,
+      "title": "Passage 1",
+      "recommended_minutes": 10,
+      "passage": "This is an example with the word \"__(1)__\". I am a __(2)__. Tom has no __(3)__. This is an example with the word \"__(4)__\". This is an example with the word \"__(5)__\".",
+      "questions": [
+        {
+          "number": 1,
+          "blank_no": 1,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "recycle"
+            },
+            {
+              "label": "B",
+              "text": "tonguetied"
+            },
+            {
+              "label": "C",
+              "text": "mahogany"
+            },
+            {
+              "label": "D",
+              "text": "stanchion"
+            },
+            {
+              "label": "E",
+              "text": "scavenger"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "stanchion",
+          "explanation": "Doğru cevap 'stanchion'. Türkçe karşılığı: direk. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "direk",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"stanchion\".",
+            "source_sentence_tr": "Bu, \"direk\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 2,
+          "blank_no": 2,
+          "stem": "I am a ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "canned"
+            },
+            {
+              "label": "B",
+              "text": "escarole"
+            },
+            {
+              "label": "C",
+              "text": "carious"
+            },
+            {
+              "label": "D",
+              "text": "colonel"
+            },
+            {
+              "label": "E",
+              "text": "bilious"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "colonel",
+          "explanation": "Doğru cevap 'colonel'. Türkçe karşılığı: albay Iieutenant colonel yarbay. colonelcy. Telaffuz: /ˈkɝnəɫ/.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "albay Iieutenant colonel yarbay. colonelcy",
+            "pronunciation": "/ˈkɝnəɫ/",
+            "source_sentence": "I am a colonel.",
+            "source_sentence_tr": "Ben bir albayım."
+          }
+        },
+        {
+          "number": 3,
+          "blank_no": 3,
+          "stem": "Tom has no ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "dillydally"
+            },
+            {
+              "label": "B",
+              "text": "backbone"
+            },
+            {
+              "label": "C",
+              "text": "gastrology"
+            },
+            {
+              "label": "D",
+              "text": "distinctive"
+            },
+            {
+              "label": "E",
+              "text": "coinsurance"
+            }
+          ],
+          "answer": "B",
+          "answer_text": "backbone",
+          "explanation": "Doğru cevap 'backbone'. Türkçe karşılığı: omurga. Telaffuz: /ˈbækˌboʊn/.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "omurga",
+            "pronunciation": "/ˈbækˌboʊn/",
+            "source_sentence": "Tom has no backbone.",
+            "source_sentence_tr": "Tom'un omurgası yok."
+          }
+        },
+        {
+          "number": 4,
+          "blank_no": 4,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "nigger"
+            },
+            {
+              "label": "B",
+              "text": "timbre"
+            },
+            {
+              "label": "C",
+              "text": "snack"
+            },
+            {
+              "label": "D",
+              "text": "gusher"
+            },
+            {
+              "label": "E",
+              "text": "phenix"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "gusher",
+          "explanation": "Doğru cevap 'gusher'. Türkçe karşılığı: tulumbasız fışkıran petrol kuyusu. Telaffuz: /ˈɡəʃɝ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "tulumbasız fışkıran petrol kuyusu",
+            "pronunciation": "/ˈɡəʃɝ/",
+            "source_sentence": "This is an example with the word \"gusher\".",
+            "source_sentence_tr": "Bu, \"tulumbasız fışkıran petrol kuyusu\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 5,
+          "blank_no": 5,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "frippery"
+            },
+            {
+              "label": "B",
+              "text": "flatulent"
+            },
+            {
+              "label": "C",
+              "text": "compassion"
+            },
+            {
+              "label": "D",
+              "text": "catholicize"
+            },
+            {
+              "label": "E",
+              "text": "cockaigne"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "frippery",
+          "explanation": "Doğru cevap 'frippery'. Türkçe karşılığı: özellikle elbisede gereksiz süs. Telaffuz: —.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "özellikle elbisede gereksiz süs",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"frippery\".",
+            "source_sentence_tr": "Bu, \"özellikle elbisede gereksiz süs\" kelimesini içeren bir örnektir."
+          }
+        }
+      ]
+    },
+    {
+      "section_no": 2,
+      "title": "Passage 2",
+      "recommended_minutes": 10,
+      "passage": "This is an example with the word \"__(6)__\". The police __(7)__ pulled to a stop near the spot where the accident happened. I am as happy as a __(8)__. Do not __(9)__ in the forest; there is danger there. This is an example with the word \"__(10)__\".",
+      "questions": [
+        {
+          "number": 6,
+          "blank_no": 1,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "batter"
+            },
+            {
+              "label": "B",
+              "text": "feculence"
+            },
+            {
+              "label": "C",
+              "text": "demesne"
+            },
+            {
+              "label": "D",
+              "text": "carnal"
+            },
+            {
+              "label": "E",
+              "text": "dismember"
+            }
+          ],
+          "answer": "B",
+          "answer_text": "feculence",
+          "explanation": "Doğru cevap 'feculence'. Türkçe karşılığı: çamur. Telaffuz: —.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "çamur",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"feculence\".",
+            "source_sentence_tr": "Bu, \"çamur\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 7,
+          "blank_no": 2,
+          "stem": "The police ______ pulled to a stop near the spot where the accident happened.",
+          "options": [
+            {
+              "label": "A",
+              "text": "ascetic"
+            },
+            {
+              "label": "B",
+              "text": "corpuscle"
+            },
+            {
+              "label": "C",
+              "text": "cruiser"
+            },
+            {
+              "label": "D",
+              "text": "burnt"
+            },
+            {
+              "label": "E",
+              "text": "boreas"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "cruiser",
+          "explanation": "Doğru cevap 'cruiser'. Türkçe karşılığı: kruvazör. Telaffuz: /ˈkɹuzɝ/.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "kruvazör",
+            "pronunciation": "/ˈkɹuzɝ/",
+            "source_sentence": "The police cruiser pulled to a stop near the spot where the accident happened.",
+            "source_sentence_tr": "Polis kruvazörü kazanın olduğu yere yakın bir durağa çekti."
+          }
+        },
+        {
+          "number": 8,
+          "blank_no": 3,
+          "stem": "I am as happy as a ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "forsake"
+            },
+            {
+              "label": "B",
+              "text": "dulse"
+            },
+            {
+              "label": "C",
+              "text": "clam"
+            },
+            {
+              "label": "D",
+              "text": "carding"
+            },
+            {
+              "label": "E",
+              "text": "euclid"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "clam",
+          "explanation": "Doğru cevap 'clam'. Türkçe karşılığı: tarak. Telaffuz: /ˈkɫæm/.",
+          "meta": {
+            "level": "intermediate",
+            "word_type": null,
+            "turkish": "tarak",
+            "pronunciation": "/ˈkɫæm/",
+            "source_sentence": "I am as happy as a clam.",
+            "source_sentence_tr": "Çok mutluyum."
+          }
+        },
+        {
+          "number": 9,
+          "blank_no": 4,
+          "stem": "Do not ______ in the forest; there is danger there.",
+          "options": [
+            {
+              "label": "A",
+              "text": "prepense"
+            },
+            {
+              "label": "B",
+              "text": "tarry"
+            },
+            {
+              "label": "C",
+              "text": "squib"
+            },
+            {
+              "label": "D",
+              "text": "taw"
+            },
+            {
+              "label": "E",
+              "text": "uncouple"
+            }
+          ],
+          "answer": "B",
+          "answer_text": "tarry",
+          "explanation": "Doğru cevap 'tarry'. Türkçe karşılığı: oyalamak. Telaffuz: /ˈtɛɹi/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "oyalamak",
+            "pronunciation": "/ˈtɛɹi/",
+            "source_sentence": "Do not tarry in the forest; there is danger there.",
+            "source_sentence_tr": "Ormanda oyalanmayın; orada tehlike var."
+          }
+        },
+        {
+          "number": 10,
+          "blank_no": 5,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "supersonic"
+            },
+            {
+              "label": "B",
+              "text": "suggestive"
+            },
+            {
+              "label": "C",
+              "text": "synecdoche"
+            },
+            {
+              "label": "D",
+              "text": "photochemistry"
+            },
+            {
+              "label": "E",
+              "text": "reduplication"
+            }
+          ],
+          "answer": "E",
+          "answer_text": "reduplication",
+          "explanation": "Doğru cevap 'reduplication'. Türkçe karşılığı: iki kat etme veya olma. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "iki kat etme veya olma",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"reduplication\".",
+            "source_sentence_tr": "Bu, \"iki kat etme veya olma\" kelimesini içeren bir örnektir."
+          }
+        }
+      ]
+    }
+  ],
+  "answer_key": {
+    "1": "D",
+    "2": "D",
+    "3": "B",
+    "4": "D",
+    "5": "A",
+    "6": "B",
+    "7": "C",
+    "8": "C",
+    "9": "B",
+    "10": "E"
+  },
+  "summary": {
+    "num_passages": 2,
+    "questions_per_passage": 5,
+    "total_questions": 10,
+    "total_minutes": 180
+  }
+}

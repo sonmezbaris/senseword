@@ -1,0 +1,753 @@
+{
+  "exam_id": "a802fc4a-d11f-4e54-868b-579f5e26f7bd",
+  "exam_type": "TOEFL",
+  "display_name": "TOEFL iBT Reading — Vocabulary in Context (Cloze)",
+  "generated_at": "2026-06-26T18:08:35.254148+00:00",
+  "seed": 42,
+  "config": {
+    "total_minutes": 35,
+    "num_options": 4,
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "negative_marking": false,
+    "delivery": "computer",
+    "recommended_minutes_per_passage": 17,
+    "ui_simulation": {}
+  },
+  "instructions": [
+    "Yanlış cevap doğruyu götürmez.",
+    "Bilgisayar tabanlıdır; Reading bölümü ~35 dakikadır (genellikle 2 pasaj).",
+    "Sorular kelimenin bağlam içindeki anlamına odaklanır.",
+    "Her soru 4 seçeneklidir (A, B, C, D)."
+  ],
+  "sections": [
+    {
+      "section_no": 1,
+      "title": "Passage 1",
+      "recommended_minutes": 17,
+      "passage": "This is an example with the word \"__(1)__\". I feared they might __(2)__ themselves. This is an example with the word \"__(3)__\". This is an example with the word \"__(4)__\". It's __(5)__ here. This is an example with the word \"__(6)__\". This is an example with the word \"__(7)__\". This is an example with the word \"__(8)__\". This is an example with the word \"__(9)__\". This is an example with the word \"__(10)__\".",
+      "questions": [
+        {
+          "number": 1,
+          "blank_no": 1,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "selfstarter"
+            },
+            {
+              "label": "B",
+              "text": "uneasy"
+            },
+            {
+              "label": "C",
+              "text": "manhood"
+            },
+            {
+              "label": "D",
+              "text": "sensorium"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "sensorium",
+          "explanation": "Doğru cevap 'sensorium'. Türkçe karşılığı: -ria) (anat.) sinir sistemi. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "-ria) (anat.) sinir sistemi",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"sensorium\".",
+            "source_sentence_tr": "Bu, \"-ria) (anat.) sinir sistemi\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 2,
+          "blank_no": 2,
+          "stem": "I feared they might ______ themselves.",
+          "options": [
+            {
+              "label": "A",
+              "text": "nosy"
+            },
+            {
+              "label": "B",
+              "text": "injure"
+            },
+            {
+              "label": "C",
+              "text": "mithras"
+            },
+            {
+              "label": "D",
+              "text": "inwrought"
+            }
+          ],
+          "answer": "B",
+          "answer_text": "injure",
+          "explanation": "Doğru cevap 'injure'. Türkçe karşılığı: incitmek. Telaffuz: /ˈɪndʒɝ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "incitmek",
+            "pronunciation": "/ˈɪndʒɝ/",
+            "source_sentence": "I feared they might injure themselves.",
+            "source_sentence_tr": "Kendilerini incitebileceklerinden korktum."
+          }
+        },
+        {
+          "number": 3,
+          "blank_no": 3,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "polygon"
+            },
+            {
+              "label": "B",
+              "text": "mysia"
+            },
+            {
+              "label": "C",
+              "text": "hebraist"
+            },
+            {
+              "label": "D",
+              "text": "nucleate"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "hebraist",
+          "explanation": "Doğru cevap 'hebraist'. Türkçe karşılığı: ibranice bilgini. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "ibranice bilgini",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"hebraist\".",
+            "source_sentence_tr": "Bu, \"ibranice bilgini\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 4,
+          "blank_no": 4,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "plaque"
+            },
+            {
+              "label": "B",
+              "text": "reinvest"
+            },
+            {
+              "label": "C",
+              "text": "thunderation"
+            },
+            {
+              "label": "D",
+              "text": "stillhunt"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "stillhunt",
+          "explanation": "Doğru cevap 'stillhunt'. Türkçe karşılığı: sessizce ve gizlenerek avlama. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "sessizce ve gizlenerek avlama",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"stillhunt\".",
+            "source_sentence_tr": "Bu, \"sessizce ve gizlenerek avlama\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 5,
+          "blank_no": 5,
+          "stem": "It's ______ here.",
+          "options": [
+            {
+              "label": "A",
+              "text": "sickle"
+            },
+            {
+              "label": "B",
+              "text": "overgrow"
+            },
+            {
+              "label": "C",
+              "text": "misty"
+            },
+            {
+              "label": "D",
+              "text": "gunshy"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "misty",
+          "explanation": "Doğru cevap 'misty'. Türkçe karşılığı: sisli. Telaffuz: /ˈmɪsti/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "sisli",
+            "pronunciation": "/ˈmɪsti/",
+            "source_sentence": "It's misty here.",
+            "source_sentence_tr": "Buraların havası pusludur."
+          }
+        },
+        {
+          "number": 6,
+          "blank_no": 6,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "runabout"
+            },
+            {
+              "label": "B",
+              "text": "superfine"
+            },
+            {
+              "label": "C",
+              "text": "meadowlark"
+            },
+            {
+              "label": "D",
+              "text": "pegasus"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "meadowlark",
+          "explanation": "Doğru cevap 'meadowlark'. Türkçe karşılığı: sarı göğsü üstünde: siyah hilâl şekli bulunan ötücü bir ç.... Telaffuz: /ˈmɛdoʊˌɫɑɹk/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "sarı göğsü üstünde: siyah hilâl şekli bulunan ötücü bir ç...",
+            "pronunciation": "/ˈmɛdoʊˌɫɑɹk/",
+            "source_sentence": "This is an example with the word \"meadowlark\".",
+            "source_sentence_tr": "Bu, \"sarı göğsü üstünde: siyah hilâl şekli bulunan ötücü bir ç...\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 7,
+          "blank_no": 7,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "sailcloth"
+            },
+            {
+              "label": "B",
+              "text": "psychotic"
+            },
+            {
+              "label": "C",
+              "text": "maigre"
+            },
+            {
+              "label": "D",
+              "text": "kabuki"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "maigre",
+          "explanation": "Doğru cevap 'maigre'. Türkçe karşılığı: sarıağız (balık). Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "sarıağız (balık)",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"maigre\".",
+            "source_sentence_tr": "Bu, \"sarıağız (balık)\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 8,
+          "blank_no": 8,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "itinerant"
+            },
+            {
+              "label": "B",
+              "text": "hibernal"
+            },
+            {
+              "label": "C",
+              "text": "pother"
+            },
+            {
+              "label": "D",
+              "text": "hangeron"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "itinerant",
+          "explanation": "Doğru cevap 'itinerant'. Türkçe karşılığı: dolaşan. Telaffuz: /aɪˈtɪnɝənt/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "dolaşan",
+            "pronunciation": "/aɪˈtɪnɝənt/",
+            "source_sentence": "This is an example with the word \"itinerant\".",
+            "source_sentence_tr": "Bu, \"dolaşan\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 9,
+          "blank_no": 9,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "stilt"
+            },
+            {
+              "label": "B",
+              "text": "squash"
+            },
+            {
+              "label": "C",
+              "text": "stele"
+            },
+            {
+              "label": "D",
+              "text": "springy"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "stele",
+          "explanation": "Doğru cevap 'stele'. Türkçe karşılığı: bitki kök veya sapının iç tarafı. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "bitki kök veya sapının iç tarafı",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"stele\".",
+            "source_sentence_tr": "Bu, \"bitki kök veya sapının iç tarafı\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 10,
+          "blank_no": 10,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "inerrant"
+            },
+            {
+              "label": "B",
+              "text": "resurrect"
+            },
+            {
+              "label": "C",
+              "text": "shampoo"
+            },
+            {
+              "label": "D",
+              "text": "psalterium"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "inerrant",
+          "explanation": "Doğru cevap 'inerrant'. Türkçe karşılığı: yanılmaz. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "yanılmaz",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"inerrant\".",
+            "source_sentence_tr": "Bu, \"yanılmaz\" kelimesini içeren bir örnektir."
+          }
+        }
+      ]
+    },
+    {
+      "section_no": 2,
+      "title": "Passage 2",
+      "recommended_minutes": 17,
+      "passage": "This is an example with the word \"__(11)__\". This is an example with the word \"__(12)__\". It isn't easy to be an __(13)__. We need to stop here and __(14)__. This is an example with the word \"__(15)__\". Tom is a __(16)__. Green plants carry out __(17)__. This is an example with the word \"__(18)__\". This is an example with the word \"__(19)__\". This is an example with the word \"__(20)__\".",
+      "questions": [
+        {
+          "number": 11,
+          "blank_no": 1,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "scolecite"
+            },
+            {
+              "label": "B",
+              "text": "patten"
+            },
+            {
+              "label": "C",
+              "text": "stagestruck"
+            },
+            {
+              "label": "D",
+              "text": "skintight"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "skintight",
+          "explanation": "Doğru cevap 'skintight'. Türkçe karşılığı: deri gibi vucuda yapışan (elbise). Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "deri gibi vucuda yapışan (elbise)",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"skintight\".",
+            "source_sentence_tr": "Bu, \"deri gibi vucuda yapışan (elbise)\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 12,
+          "blank_no": 2,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "sticktoitive"
+            },
+            {
+              "label": "B",
+              "text": "pyroclastic"
+            },
+            {
+              "label": "C",
+              "text": "onelegged"
+            },
+            {
+              "label": "D",
+              "text": "psychosis"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "sticktoitive",
+          "explanation": "Doğru cevap 'sticktoitive'. Türkçe karşılığı: sebatkâr. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "sebatkâr",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"sticktoitive\".",
+            "source_sentence_tr": "Bu, \"sebatkâr\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 13,
+          "blank_no": 3,
+          "stem": "It isn't easy to be an ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "umpire"
+            },
+            {
+              "label": "B",
+              "text": "squint"
+            },
+            {
+              "label": "C",
+              "text": "unfold"
+            },
+            {
+              "label": "D",
+              "text": "rampart"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "umpire",
+          "explanation": "Doğru cevap 'umpire'. Türkçe karşılığı: hakem. Telaffuz: /ˈəmˌpaɪɝ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "hakem",
+            "pronunciation": "/ˈəmˌpaɪɝ/",
+            "source_sentence": "It isn't easy to be an umpire.",
+            "source_sentence_tr": "Bir hakem olmak kolay değildir."
+          }
+        },
+        {
+          "number": 14,
+          "blank_no": 4,
+          "stem": "We need to stop here and ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "refuel"
+            },
+            {
+              "label": "B",
+              "text": "paddy"
+            },
+            {
+              "label": "C",
+              "text": "thematic"
+            },
+            {
+              "label": "D",
+              "text": "sedate"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "refuel",
+          "explanation": "Doğru cevap 'refuel'. Türkçe karşılığı: yakıt ikmal etmek. Telaffuz: /ɹifˈjuəɫ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "yakıt ikmal etmek",
+            "pronunciation": "/ɹifˈjuəɫ/",
+            "source_sentence": "We need to stop here and refuel.",
+            "source_sentence_tr": "Bizim burada durup yakıt almamız gerekir."
+          }
+        },
+        {
+          "number": 15,
+          "blank_no": 5,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "subordinate"
+            },
+            {
+              "label": "B",
+              "text": "schizomycosis"
+            },
+            {
+              "label": "C",
+              "text": "inapplicable"
+            },
+            {
+              "label": "D",
+              "text": "subaltern"
+            }
+          ],
+          "answer": "C",
+          "answer_text": "inapplicable",
+          "explanation": "Doğru cevap 'inapplicable'. Türkçe karşılığı: uymaz. Telaffuz: /ˌɪˈnæpɫɪkəbəɫ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "uymaz",
+            "pronunciation": "/ˌɪˈnæpɫɪkəbəɫ/",
+            "source_sentence": "This is an example with the word \"inapplicable\".",
+            "source_sentence_tr": "Bu, \"uymaz\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 16,
+          "blank_no": 6,
+          "stem": "Tom is a ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "malcontent"
+            },
+            {
+              "label": "B",
+              "text": "saddler"
+            },
+            {
+              "label": "C",
+              "text": "transverse"
+            },
+            {
+              "label": "D",
+              "text": "prevenance"
+            }
+          ],
+          "answer": "B",
+          "answer_text": "saddler",
+          "explanation": "Doğru cevap 'saddler'. Türkçe karşılığı: saraç. Telaffuz: /ˈsædəɫɝ/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "saraç",
+            "pronunciation": "/ˈsædəɫɝ/",
+            "source_sentence": "Tom is a saddler.",
+            "source_sentence_tr": "Tom bir saraç."
+          }
+        },
+        {
+          "number": 17,
+          "blank_no": 7,
+          "stem": "Green plants carry out ______.",
+          "options": [
+            {
+              "label": "A",
+              "text": "middleweight"
+            },
+            {
+              "label": "B",
+              "text": "interferometer"
+            },
+            {
+              "label": "C",
+              "text": "semiskilled"
+            },
+            {
+              "label": "D",
+              "text": "photosynthesis"
+            }
+          ],
+          "answer": "D",
+          "answer_text": "photosynthesis",
+          "explanation": "Doğru cevap 'photosynthesis'. Türkçe karşılığı: karbon özümlemesi. Telaffuz: /ˌfoʊtoʊˈsɪnθəsɪs/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "karbon özümlemesi",
+            "pronunciation": "/ˌfoʊtoʊˈsɪnθəsɪs/",
+            "source_sentence": "Green plants carry out photosynthesis.",
+            "source_sentence_tr": "Yeşil bitkiler fotosentez yaparlar."
+          }
+        },
+        {
+          "number": 18,
+          "blank_no": 8,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "herbaceous"
+            },
+            {
+              "label": "B",
+              "text": "ingrain"
+            },
+            {
+              "label": "C",
+              "text": "sinciput"
+            },
+            {
+              "label": "D",
+              "text": "tunicle"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "herbaceous",
+          "explanation": "Doğru cevap 'herbaceous'. Türkçe karşılığı: ot cinsinden. Telaffuz: /ɝˈbeɪʃəs/.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "ot cinsinden",
+            "pronunciation": "/ɝˈbeɪʃəs/",
+            "source_sentence": "This is an example with the word \"herbaceous\".",
+            "source_sentence_tr": "Bu, \"ot cinsinden\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 19,
+          "blank_no": 9,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "hemipteral"
+            },
+            {
+              "label": "B",
+              "text": "moneychanger"
+            },
+            {
+              "label": "C",
+              "text": "shedder"
+            },
+            {
+              "label": "D",
+              "text": "masochism"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "hemipteral",
+          "explanation": "Doğru cevap 'hemipteral'. Türkçe karşılığı: hemipterous (zool.) yarımkanatlılara ait. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "hemipterous (zool.) yarımkanatlılara ait",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"hemipteral\".",
+            "source_sentence_tr": "Bu, \"hemipterous (zool.) yarımkanatlılara ait\" kelimesini içeren bir örnektir."
+          }
+        },
+        {
+          "number": 20,
+          "blank_no": 10,
+          "stem": "This is an example with the word \"______\".",
+          "options": [
+            {
+              "label": "A",
+              "text": "incorrupt"
+            },
+            {
+              "label": "B",
+              "text": "inhibit"
+            },
+            {
+              "label": "C",
+              "text": "ligneous"
+            },
+            {
+              "label": "D",
+              "text": "stalagmite"
+            }
+          ],
+          "answer": "A",
+          "answer_text": "incorrupt",
+          "explanation": "Doğru cevap 'incorrupt'. Türkçe karşılığı: ahlâkı bozulmamış. Telaffuz: —.",
+          "meta": {
+            "level": "advanced",
+            "word_type": null,
+            "turkish": "ahlâkı bozulmamış",
+            "pronunciation": "",
+            "source_sentence": "This is an example with the word \"incorrupt\".",
+            "source_sentence_tr": "Bu, \"ahlâkı bozulmamış\" kelimesini içeren bir örnektir."
+          }
+        }
+      ]
+    }
+  ],
+  "answer_key": {
+    "1": "D",
+    "2": "B",
+    "3": "C",
+    "4": "D",
+    "5": "C",
+    "6": "C",
+    "7": "C",
+    "8": "A",
+    "9": "C",
+    "10": "A",
+    "11": "D",
+    "12": "A",
+    "13": "A",
+    "14": "A",
+    "15": "C",
+    "16": "B",
+    "17": "D",
+    "18": "A",
+    "19": "A",
+    "20": "A"
+  },
+  "summary": {
+    "num_passages": 2,
+    "questions_per_passage": 10,
+    "total_questions": 20,
+    "total_minutes": 35
+  }
+}
