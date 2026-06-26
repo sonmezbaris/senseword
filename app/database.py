@@ -23,6 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # point at PostgreSQL (or any other SQLAlchemy-supported database) in prod.
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'senseword.db'}")
 
+# Managed providers (Render, Heroku, …) often expose the legacy ``postgres://``
+# scheme, which SQLAlchemy no longer accepts. Normalize it to ``postgresql://``
+# so the bundled psycopg2 driver is used without extra configuration.
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = "postgresql://" + DATABASE_URL[len("postgres://"):]
+
 # SQLite needs this flag because it otherwise refuses to share a connection
 # across threads, which FastAPI does. Other databases ignore connect_args.
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}

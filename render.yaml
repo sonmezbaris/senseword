@@ -1,5 +1,12 @@
-# Render Blueprint — one-click deploy from GitHub.
+# Render Blueprint — one-click deploy (web service + free Postgres) from GitHub.
 # https://render.com/docs/blueprint-spec
+databases:
+  - name: senseword-db
+    plan: free
+    databaseName: senseword
+    user: senseword
+    region: frankfurt
+
 services:
   - type: web
     name: senseword
@@ -13,8 +20,9 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      # SQLite resets on every redeploy (ephemeral disk). The catalog re-seeds
-      # automatically on startup. For persistent users/progress, set DATABASE_URL
-      # to a managed Postgres URL instead, e.g.:
-      # - key: DATABASE_URL
-      #   value: postgresql+psycopg://user:pass@host:5432/senseword
+      # Persistent Postgres so user accounts/progress survive redeploys.
+      # Render injects the connection string; the app normalizes the scheme.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: senseword-db
+          property: connectionString
