@@ -16,4 +16,6 @@ COPY . .
 EXPOSE 8000
 
 # Most PaaS providers inject a $PORT. Default to 8000 for local `docker run`.
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# --proxy-headers + --forwarded-allow-ips lets the app see the real https scheme
+# behind the platform's reverse proxy, so generated URLs aren't insecure (http).
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips=*"]
