@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ exam.exam_type }} Deneme — SenseWord{% endblock %}
+
+{% block content %}
+<div class="exam-page"
+     data-total="{{ questions|length }}"
+     data-minutes="{{ exam.config.total_minutes }}">
+
+    <div class="exam-topbar">
+        <div>
+            <h1 class="exam-title">{{ exam.display_name }}</h1>
+            <p class="exam-sub">
+                {{ exam.config.num_options }} şıklı · {{ questions|length }} soru ·
+                Yanlış doğruyu götürmez
+            </p>
+        </div>
+        <a class="btn btn-danger btn-small exam-exit" href="{{ '/dashboard' if user else '/' }}">
+            Sınavdan Çık
+        </a>
+    </div>
+
+    <div class="exam-scorebar">
+        <span class="score-correct">Doğru: <b id="scoreCorrect">0</b></span>
+        <span class="score-wrong">Yanlış: <b id="scoreWrong">0</b></span>
+        <span class="score-left">Kalan: <b id="scoreLeft">{{ questions|length }}</b></span>
+        <span class="exam-timer">⏱️ <b id="examTimer">--:--</b></span>
+    </div>
+
+    {% if exam.config.ui_simulation %}
+    <div class="exam-eyds-note">
+        e-YDS simülasyonu: süre duraklatılamaz, soruları cevapladıktan sonra
+        işaretleyip geri dönebilirsin.
+    </div>
+    {% endif %}
+
+    <details class="exam-rules">
+        <summary>Sınav kuralları</summary>
+        <ul>
+            {% for rule in exam.instructions %}
+            <li>{{ rule }}</li>
+            {% endfor %}
+        </ul>
+    </details>
+
+    <ol class="exam-questions">
+        {% for q in questions %}
+        <li class="exam-q" id="q{{ q.number }}" data-answered="0">
+            <div class="exam-q-stem">
+                <span class="exam-q-no">{{ q.number }}.</span>
+                <span>{{ q.stem }}</span>
+            </div>
+            <div class="exam-options">
+                {% for opt in q.options %}
+                <button type="button"
+                        class="exam-option"
+                        data-correct="{{ 1 if opt.label == q.answer else 0 }}"
+                        data-q="{{ q.number }}">
+                    <span class="opt-label">{{ opt.label }}</span>
+                    <span class="opt-text">{{ opt.text }}</span>
+                    <span class="opt-mark"></span>
+                </button>
+                {% endfor %}
+            </div>
+            <div class="exam-explanation" hidden>{{ q.explanation }}</div>
+        </li>
+        {% endfor %}
+    </ol>
+
+    <div class="exam-finish" id="examFinish" hidden>
+        <h2>Deneme tamamlandı 🎉</h2>
+        <p id="examResult"></p>
+        <div class="exam-finish-actions">
+            <a class="btn btn-primary" href="/exam/{{ exam.exam_type|lower }}">Yeni Deneme</a>
+            <a class="btn btn-secondary" href="/exam">Sınav Seç</a>
+            <a class="btn btn-secondary" href="{{ '/dashboard' if user else '/' }}">Çıkış</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/exam.js') }}"></script>
+{% endblock %}

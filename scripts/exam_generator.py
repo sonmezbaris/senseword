@@ -285,15 +285,21 @@ class WordPool:
         return cls(words)
 
     # ---- Seçim yardımcıları ----------------------------------------------
-    def answer_candidates(self, levels: Iterable[str]) -> list[Word]:
+    def answer_candidates(
+        self, levels: Iterable[str], *, require_real_sentence: bool = False
+    ) -> list[Word]:
         """Boşluk açılabilen (kendi örnek cümlesinde geçen) anlamlı kelimeler.
 
         Belirtilen seviyelerden, tek sözcüklü, işlev kelimesi olmayan ve örnek
         cümlesinde geçen kelimeleri döndürür.
+
+        ``require_real_sentence=True`` ise jenerik ("This is an example...")
+        kalıbındaki cümleler elenir; böylece sorular gerçek bağlamlı olur.
         """
         levels = tuple(levels)
-        if levels in self._answer_pool_cache:
-            return self._answer_pool_cache[levels]
+        cache_key = (levels, require_real_sentence)
+        if cache_key in self._answer_pool_cache:
+            return self._answer_pool_cache[cache_key]
 
         pool: list[Word] = []
         wanted = set(levels)
@@ -305,8 +311,10 @@ class WordPool:
                 continue
             if not _word_in_sentence(w.word, w.example_sentence):
                 continue
+            if require_real_sentence and _is_generic_sentence(w.example_sentence):
+                continue
             pool.append(w)
-        self._answer_pool_cache[levels] = pool
+        self._answer_pool_cache[cache_key] = pool
         return pool
 
     def pick_distractors(
@@ -376,6 +384,11 @@ def _word_in_sentence(word: str, sentence: str) -> bool:
     return re.search(rf"\b{re.escape(word)}\b", sentence, re.IGNORECASE) is not None
 
 
+def _is_generic_sentence(sentence: str) -> bool:
+    """True for placeholder sentences like 'This is an example with the word "x".'."""
+    return sentence.strip().lower().startswith("this is an example")
+
+
 def _blank_sentence(word: str, sentence: str, blank_token: str) -> str:
     """Cümledeki kelimenin tüm tam-sözcük geçişlerini boşlukla değiştirir."""
     return re.sub(
@@ -438,6 +451,7 @@ def generate_cloze_test(
     seed: int | None = None,
     num_passages: int | None = None,
     questions_per_passage: int | None = None,
+    require_real_sentence: bool = False,
 ) -> dict:
     """Belirtilen sınav türü için tam bir cloze deneme sınavı üretir.
 
@@ -460,10 +474,20 @@ def generate_cloze_test(
     n_per_passage = questions_per_passage or config.questions_per_passage
     total_needed = n_passages * n_per_passage
 
-    candidates = pool.answer_candidates(config.preferred_levels)
+    candidates = pool.answer_candidates(
+        config.preferred_levels, require_real_sentence=require_real_sentence
+    )
     if len(candidates) < total_needed:
         # Tercih edilen seviyelerde yeterli yoksa tüm seviyelere genişlet.
-        candidates = pool.answer_candidates(("beginner", "intermediate", "advanced"))
+        candidates = pool.answer_candidates(
+            ("beginner", "intermediate", "advanced"),
+            require_real_sentence=require_real_sentence,
+        )
+    if require_real_sentence and len(candidates) < total_needed:
+        # Gerçek cümle kısıtıyla yeterli yoksa kısıtı gevşet (jeneriklere izin ver).
+        candidates = pool.answer_candidates(
+            ("beginner", "intermediate", "advanced")
+        )
     if len(candidates) < total_needed:
         raise ValueError(
             f"Havuzda yeterli uygun kelime yok: {len(candidates)} < {total_needed}"

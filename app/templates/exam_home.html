@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Deneme Sınavları — SenseWord{% endblock %}
+
+{% block content %}
+<section class="exam-intro">
+    <h1>Deneme Sınavları</h1>
+    <p class="lead">
+        IELTS, TOEFL, YDS ve e-YDS formatlarına uygun çoktan seçmeli
+        <strong>boşluk doldurma (cloze test)</strong> denemeleri. Her cevaptan
+        hemen sonra doğru şık <span class="tick">✓</span> ile anında gösterilir.
+        İstediğin an sınavdan çıkabilirsin. Tamamen ücretsiz.
+    </p>
+</section>
+
+<section class="exam-grid">
+    {% for e in exams %}
+    <article class="exam-card">
+        <div class="exam-card-body">
+            <h2>{{ e.key }}</h2>
+            <p class="exam-card-name">{{ e.display_name }}</p>
+            <ul class="exam-meta">
+                <li>⏱️ {{ e.total_minutes }} dakika</li>
+                <li>🔤 {{ e.num_options }} şıklı (A–{{ "E" if e.num_options == 5 else "D" }})</li>
+                <li>❓ {{ e.total_questions }} soru</li>
+                <li>🖥️ {{ "Bilgisayar" if e.delivery == "computer" else ("Kağıt" if e.delivery == "paper" else "Kağıt / Bilgisayar") }}</li>
+            </ul>
+        </div>
+        <a class="btn btn-primary" href="/exam/{{ e.slug }}">Denemeye Başla</a>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

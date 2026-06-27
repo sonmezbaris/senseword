@@ -32,6 +32,7 @@ from app.routers import (
     api,
     auth,
     dashboard,
+    exam,
     learning,
     onboarding,
     paths,
@@ -98,6 +99,7 @@ app.include_router(study.router)
 app.include_router(paths.router)
 app.include_router(weak_words.router)
 app.include_router(subscription.router)
+app.include_router(exam.router)
 app.include_router(api.router)
 
 

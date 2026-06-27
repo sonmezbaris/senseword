@@ -37,38 +37,27 @@ PREMIUM_PATH_GOALS = {
 
 
 def user_has_premium_access(user: User) -> bool:
-    """True when the user may use Premium features (unlimited study, etc.)."""
-    if user.plan == PLAN_FOUNDING and user.subscription_status == SUB_ACTIVE:
-        return True
-    if user.plan == PLAN_PREMIUM and user.subscription_status in {
-        SUB_ACTIVE,
-        SUB_TRIALING,
-    }:
-        return True
-    return False
+    """Everything is free now — every feature is unlocked for all users.
+
+    The paywall has been removed: words, learning paths, reviews, weak-word
+    practice and exams are available to everyone without payment or limits.
+    """
+    return True
 
 
 def get_user_plan_label(user: User) -> str:
-    """Human-readable plan name for the dashboard."""
-    if user.plan == PLAN_FOUNDING and user.subscription_status == SUB_ACTIVE:
-        return "Founding Member"
-    if user.plan == PLAN_PREMIUM and user.subscription_status in {
-        SUB_ACTIVE,
-        SUB_TRIALING,
-    }:
-        return "Premium"
-    return "Free"
+    """Human-readable plan name for the dashboard (everyone is full-access)."""
+    return "Full access"
 
 
 def can_access_path(user: User, path_slug: str) -> bool:
-    """Free users may only open paths in ``FREE_PATH_SLUGS``."""
-    if user_has_premium_access(user):
-        return True
-    return path_slug in FREE_PATH_SLUGS
+    """All learning paths are free for everyone."""
+    return True
 
 
 def is_premium_path_slug(path_slug: str) -> bool:
-    return path_slug not in FREE_PATH_SLUGS
+    """No path is premium anymore."""
+    return False
 
 
 # ---------------------------------------------------------------------------
